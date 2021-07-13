@@ -1,6 +1,5 @@
 package com.example.learning.controller;
 
-import com.example.learning.entity.request.AnswerRequest;
 import com.example.learning.entity.request.QuestionRequest;
 import com.example.learning.model.AnswerEntity;
 import com.example.learning.model.QuestionEntity;
@@ -21,7 +20,7 @@ import java.util.stream.Collectors;
 
 @CrossOrigin
 @RestController
-@RequestMapping("/question")
+@RequestMapping("/api/question")
 public class QuestionController {
 
     @Autowired
@@ -30,7 +29,6 @@ public class QuestionController {
     @PostMapping()
     public ResponseEntity<Object> createQuestion(@Valid @RequestBody QuestionRequest questionRequest) {
         QuestionEntity questionEntity = new QuestionEntity();
-
         BeanUtils.copyProperties(questionRequest,questionEntity);
         List<AnswerEntity> answerRequestList = questionRequest.getAnswers().stream().map(answer ->{
             AnswerEntity answerEntity = new AnswerEntity();
@@ -44,9 +42,10 @@ public class QuestionController {
 
     @GetMapping("/search")
     public ResponseEntity<Object> searchQuestion(){
-        Page<QuestionEntity> pageQuestion = questionRepository.findPageable(
-                PageRequest.of(1, 5, Sort.by("question_content").ascending())
-        );
+        Page<QuestionEntity> pageQuestion = questionRepository.findAllPagable(PageRequest.of(1, 26));
+//        Page<QuestionEntity> pageQuestion = questionRepository.findAll(
+//                PageRequest.of(1, 26, Sort.by("questionContent").ascending())
+//        );
         return new ResponseEntity<>(pageQuestion,HttpStatus.ACCEPTED);
     }
 
@@ -61,6 +60,12 @@ public class QuestionController {
     public ResponseEntity<Object> getQuestionById(@PathVariable("id") Long id){
         Optional<QuestionEntity> questionEntity = questionRepository.findById(id);
         return new ResponseEntity<>(questionEntity.get(),HttpStatus.ACCEPTED);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Object> deleteQuestionById(@PathVariable("id") Long id){
+        questionRepository.deleteById(id);
+        return new ResponseEntity<>(null ,HttpStatus.ACCEPTED);
     }
 
 }

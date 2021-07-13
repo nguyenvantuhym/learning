@@ -6,10 +6,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Entity;
-import javax.validation.Valid;
 import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @Data
@@ -21,6 +18,5 @@ public class QuestionRequest {
     private String questionContent;
 
     @NotEmpty(message = "Input movie list cannot be empty.")
-    @Valid
     private List<AnswerRequest> answers;
 }

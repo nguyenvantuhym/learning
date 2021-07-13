@@ -11,6 +11,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface QuestionRepository extends JpaRepository<QuestionEntity, Long> {
 
-    @Query(value = "select * from  questions ", nativeQuery = true)
-    Page<QuestionEntity> findPageable(Pageable pageable);
+    @Query(value = "select * from questions order by rand() ", nativeQuery = true)
+    Page<QuestionEntity> findAllPagable(Pageable pageable);
 }

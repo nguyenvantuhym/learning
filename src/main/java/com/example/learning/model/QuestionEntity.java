@@ -21,7 +21,6 @@ public class QuestionEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotNull(message = "khoong dc null ban oi")
     @Column(name = "question_content")
     private String questionContent;
 
@@ -29,7 +28,6 @@ public class QuestionEntity {
     private Boolean isActive = true;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-
     @JoinColumn(name="question_id")
     private List<AnswerEntity> answers;
 

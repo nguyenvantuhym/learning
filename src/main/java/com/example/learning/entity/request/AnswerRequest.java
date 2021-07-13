@@ -14,7 +14,10 @@ public class AnswerRequest {
     @Required
     private String answerContent;
 
-
+    @Required
     private Boolean isCorrect;
+
+    @Required
+    private Boolean isActive;
 
 }
